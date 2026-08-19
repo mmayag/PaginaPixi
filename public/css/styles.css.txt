@@ -1,0 +1,255 @@
+/* RESETEO DE ESTILOS BASE */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+:root {
+    /* Paleta de colores estilo VS Code Oscuro */
+    --bg-main: #1e1e1e;
+    --bg-side: #252526;
+    --bg-activity: #333333;
+    --bg-top: #3c3c3c;
+    --bg-terminal: #111111;
+    --text-color: #d4d4d4;
+    --text-bright: #ffffff;
+    --accent-blue: #007acc;
+    --accent-green: #4ec9b0;
+    --btn-success: #28a745;
+    --border-color: #3c3c3c;
+}
+
+body, html {
+    height: 100%;
+    overflow: hidden;
+    background-color: var(--bg-main);
+    color: var(--text-color);
+}
+
+/* CONTENEDOR PRINCIPAL */
+#app-container {
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+}
+
+/* 1. BARRA SUPERIOR */
+#top-bar {
+    background-color: var(--bg-top);
+    height: 50px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 20px;
+    border-bottom: 1px solid var(--border-color);
+}
+
+.logo-area {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.logo-icon {
+    font-size: 1.5rem;
+}
+
+#top-bar h1 {
+    font-size: 1.1rem;
+    color: var(--text-bright);
+    font-weight: 500;
+}
+
+/* BOTONES DE LA BARRA SUPERIOR */
+.action-buttons {
+    display: flex;
+    gap: 10px;
+}
+
+button {
+    padding: 6px 14px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 0.85rem;
+    font-weight: 600;
+    transition: background-color 0.2s;
+}
+
+.btn-primary { background-color: var(--accent-blue); color: white; }
+.btn-primary:hover { background-color: #0062a3; }
+
+.btn-secondary { background-color: #4d4d4d; color: var(--text-bright); }
+.btn-secondary:hover { background-color: #5a5a5a; }
+
+.btn-success { background-color: var(--btn-success); color: white; }
+.btn-success:hover { background-color: #218838; }
+
+.btn-mini { background-color: #2d2d2d; color: #a0a0a0; font-size: 0.75rem; padding: 2px 8px; }
+.btn-mini:hover { background-color: #404040; color: white; }
+
+/* CUERPO CENTRAL */
+#main-content {
+    display: flex;
+    flex: 1;
+    overflow: hidden;
+}
+
+/* 2. BARRA DE ACTIVIDAD */
+#activity-bar {
+    background-color: var(--bg-activity);
+    width: 50px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding-top: 10px;
+    gap: 15px;
+}
+
+.activity-btn {
+    background: none;
+    font-size: 1.4rem;
+    padding: 8px;
+    width: 100%;
+    border-left: 3px solid transparent;
+    border-radius: 0;
+    transition: all 0.2s;
+}
+
+.activity-btn:hover { background-color: #3c3c3c; }
+.activity-btn.active {
+    border-left-color: var(--accent-blue);
+    background-color: var(--bg-main);
+}
+
+/* 3. PANEL LATERAL (SIDEBAR) */
+#sidebar {
+    background-color: var(--bg-side);
+    width: 240px;
+    border-right: 1px solid var(--border-color);
+    display: flex;
+    flex-direction: column;
+}
+
+.sidebar-title {
+    padding: 10px 15px;
+    border-bottom: 1px solid var(--border-color);
+}
+
+.sidebar-title h2 {
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: #858585;
+}
+
+.placeholder-text {
+    padding: 20px;
+    font-size: 0.85rem;
+    color: #6c757d;
+    font-style: italic;
+    text-align: center;
+}
+
+/* CONTENEDOR DE TRABAJO DERECHO */
+#editor-zone {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+}
+
+/* ÁREA DE BLOCKLY */
+#blockly-wrapper {
+    flex: 2; /* Ocupa la mayor parte del espacio vertical */
+    position: relative;
+    background-color: var(--bg-main);
+}
+
+#blockly-div {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+}
+
+/* 4. CONSOLA INFERIOR */
+#bottom-panel {
+    height: 180px;
+    background-color: var(--bg-terminal);
+    border-top: 1px solid var(--border-color);
+    display: flex;
+    flex-direction: column;
+}
+
+.panel-header {
+    background-color: var(--bg-side);
+    padding: 6px 15px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid var(--border-color);
+}
+
+.panel-header h3 {
+    font-size: 0.8rem;
+    text-transform: uppercase;
+    color: #858585;
+    font-weight: 600;
+}
+
+#terminal-output {
+    flex: 1;
+    padding: 10px 15px;
+    font-family: 'Courier New', Courier, monospace;
+    font-size: 0.85rem;
+    overflow-y: auto;
+    color: var(--accent-green);
+    line-height: 1.4;
+}
+
+.system-msg {
+    color: #858585;
+}
+
+/* Fondo del menú de categorías (Toolbox) de Blockly */
+.blocklyToolboxDiv {
+    background-color: var(--bg-side) !important;
+    border-right: 1px solid var(--border-color) !important;
+    color: var(--text-color) !important;
+    font-weight: 500;
+}
+
+/* Estilos para cada ítem de categoría individual en la lista */
+.blocklyTreeLabel {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif !important;
+    font-size: 0.9rem !important;
+    color: var(--text-color) !important;
+    padding-left: 5px;
+}
+
+/* Cambio de color cuando pasas el mouse por encima o seleccionas una categoría */
+.blocklyTreeRow:not(.blocklyTreeSelected):hover {
+    background-color: #333333 !important;
+}
+
+.blocklyTreeRow.blocklyTreeSelected {
+    background-color: var(--accent-blue) !important;
+}
+
+.blocklyTreeRow.blocklyTreeSelected .blocklyTreeLabel {
+    color: var(--text-bright) !important;
+}
+
+/* Ocultar el panel HTML viejo que ya no necesitamos porque Blockly maneja su menú */
+#toolbox-placeholder {
+    display: none !important;
+}
+
+/* Ajustar el contenedor para que el menú de Blockly se alinee al lado izquierdo del lienzo */
+.blocklyMainBackground {
+    fill: var(--bg-main) !important; /* Fuerza el fondo oscuro en el lienzo si es necesario */
+}

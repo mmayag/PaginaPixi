@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pixi Blocks Lab - ESP32-S3</title>
+
+    <script src="https://unpkg.com/blockly/blockly_compressed.js"></script>
+    <script src="https://unpkg.com/blockly/blocks_compressed.js"></script>
+    <script src="https://unpkg.com/blockly/javascript_compressed.js"></script>
+    <script src="https://unpkg.com/blockly/msg/es.js"></script>
+
+    <script src="https://unpkg.com/esptool-js@0.4.0/bundle.js"></script>
+
+    <style>
+        body { margin: 0; font-family: sans-serif; background-color: #1e1e2e; color: #fff; }
+        header { display: flex; justify: space-between; align-items: center; padding: 10px 20px; background: #11111b; }
+        .btn-group button { padding: 8px 16px; border: none; border-radius: 6px; cursor: pointer; font-weight: bold; margin-left: 5px; }
+        .btn-connect { background: #0284c7; color: white; }
+        .btn-upload { background: #10b981; color: white; }
+        #main-container { display: flex; height: calc(100vh - 200px); }
+        #blockly-div { width: 100%; height: 100%; }
+        #terminal-container { height: 140px; background: #0f172a; border-top: 2px solid #334155; padding: 10px; box-sizing: border-box; }
+        #terminal-output { height: 90px; overflow-y: auto; background: #020617; padding: 8px; border-radius: 4px; }
+    </style>
+</head>
+<body>
+
+    <header>
+        <h2>🤖 Pixi Blocks Lab</h2>
+        <div class="btn-group">
+            <button id="btn-save">Guardar Proyecto</button>
+            <button id="btn-connect" class="btn-connect">Conectar ESP32</button>
+            <button id="btn-upload" class="btn-upload">Subir Código 🚀</button>
+        </div>
+    </header>
+
+    <div id="main-container">
+        <div id="blockly-div"></div>
+    </div>
+
+    <div id="terminal-container">
+        <div style="display: flex; justify-content: space-between; margin-bottom: 5px;">
+            <span style="font-size: 12px; font-weight: bold; color: #94a3b8;">MONITOR SERIAL & TERMINAL</span>
+            <button id="btn-clear-terminal" style="background: #334155; color: white; border: none; padding: 2px 8px; border-radius: 4px; cursor: pointer; font-size: 11px;">Limpiar</button>
+        </div>
+        <div id="terminal-output"></div>
+    </div>
+
+    <xml id="toolbox" style="display: none">
+        <category name="Inicio" colour="#4cb050">
+            <block type="esp32_on_start"></block>
+            <block type="esp32_main_loop"></block>
+        </category>
+        <category name="Movimiento" colour="#2196f3">
+            <block type="esp32_servo_move"></block>
+            <block type="esp32_motor_dc"></block>
+            <block type="esp32_motor_stop"></block>
+            <block type="esp32_digital_write"></block>
+        </category>
+        <category name="Matemáticas" colour="#5c6bc0">
+            <block type="math_number"></block>
+            <block type="math_arithmetic"></block>
+        </category>
+        <category name="Lógica" colour="#42a5f5">
+            <block type="controls_if"></block>
+            <block type="logic_compare"></block>
+        </category>
+    </xml>
+
+    <script src="js/app.js"></script>
+</body>
+</html>
+
