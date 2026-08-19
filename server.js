@@ -12,14 +12,14 @@ app.use(cors());
 app.use(bodyParser.json());
 app.use(express.static(path.join(__dirname, 'public')));
 
-// Placa específica: ESP32-S3
+// Target FQBN para la ESP32-S3
 const FQBN = 'esp32:esp32:esp32s3';
 
 app.post('/api/compile', (req, res) => {
     const cppCode = req.body.code;
 
     if (!cppCode) {
-        return res.status(400).json({ success: false, message: 'No hay código C++.' });
+        return res.status(400).json({ success: false, message: 'No se envió código C++.' });
     }
 
     const buildDir = path.join(__dirname, 'build_temp');
@@ -34,24 +34,24 @@ app.post('/api/compile', (req, res) => {
 
     console.log('[Servidor Local] Compilando para ESP32-S3...');
 
-    // Ejecutar compilación con arduino-cli
+    // Detectar el ejecutable de arduino-cli local o global
     const arduinoExecutable = fs.existsSync(path.join(__dirname, 'arduino-cli.exe')) 
-    ? `"${path.join(__dirname, 'arduino-cli.exe')}"` 
-    : 'arduino-cli';
+        ? `"${path.join(__dirname, 'arduino-cli.exe')}"` 
+        : 'arduino-cli';
 
-const compileCmd = `${arduinoExecutable} compile --fqbn ${FQBN} --output-dir "${buildDir}" "${sketchDir}"`;
+    const compileCmd = `${arduinoExecutable} compile --fqbn ${FQBN} --output-dir "${buildDir}" "${sketchDir}"`;
 
     exec(compileCmd, (error, stdout, stderr) => {
         if (error) {
             console.error('[Error de Compilación]:', stderr);
             return res.status(500).json({
                 success: false,
-                message: 'Error al compilar C++',
+                message: 'Error al compilar el código C++',
                 details: stderr || stdout
             });
         }
 
-        console.log('[Éxito] ¡Binarios (.bin) generados correctamente!');
+        console.log('[Éxito] ¡Binario .bin generado correctamente!');
 
         try {
             const appBinPath = path.join(buildDir, 'sketch.ino.bin');
@@ -62,11 +62,15 @@ const compileCmd = `${arduinoExecutable} compile --fqbn ${FQBN} --output-dir "${
                 bins: { app: appBin }
             });
         } catch (readErr) {
-            res.status(500).json({ success: false, message: 'No se encontró el archivo .bin' });
+            res.status(500).json({
+                success: false,
+                message: 'No se pudo leer el archivo binario generado.',
+                details: readErr.message
+            });
         }
     });
 });
 
 app.listen(PORT, () => {
-    console.log(`🚀 Servidor ejecutándose en http://localhost:${PORT}`);
+    console.log(`🚀 Servidor Pixi Blocks Lab ejecutándose en http://localhost:${PORT}`);
 });
